@@ -1,2 +1,3 @@
-# Ai-Driven-Medical-Voice-Assistance
-Medical voice assistance 
+# My Project
+
+This is my app
