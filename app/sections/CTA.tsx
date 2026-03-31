@@ -1,10 +1,10 @@
-"use client";
+'use client'
 
-import Link from "next/link";
-import { motion, useReducedMotion } from "../components/Motion";
+import Link from 'next/link'
+import { motion, useHydrationSafeReducedMotion } from '../components/Motion'
 
 export default function CTA() {
-  const reduce = useReducedMotion();
+  const reduce = useHydrationSafeReducedMotion()
 
   return (
     <section className="mx-auto max-w-6xl px-6 pb-20 pt-10 sm:pb-28">
@@ -48,6 +48,5 @@ export default function CTA() {
         </div>
       </motion.div>
     </section>
-  );
+  )
 }
-

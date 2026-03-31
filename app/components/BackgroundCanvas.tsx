@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import * as THREE from "three";
 import { Canvas, useFrame } from "@react-three/fiber";
 
@@ -73,8 +73,12 @@ function Particles({ mouse }: { mouse: MouseRef }) {
 
 export default function BackgroundCanvas() {
   const mouse = useRef({ x: 0, y: 0 });
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => setMounted(true), []);
 
   useEffect(() => {
+    if (!mounted) return;
     const onMove = (e: PointerEvent) => {
       const x = (e.clientX / window.innerWidth) * 2 - 1;
       const y = -((e.clientY / window.innerHeight) * 2 - 1);
@@ -84,7 +88,11 @@ export default function BackgroundCanvas() {
 
     window.addEventListener("pointermove", onMove, { passive: true });
     return () => window.removeEventListener("pointermove", onMove);
-  }, []);
+  }, [mounted]);
+
+  if (!mounted) {
+    return <div aria-hidden="true" className="pointer-events-none fixed inset-0 -z-20 opacity-90" />;
+  }
 
   return (
     <div aria-hidden="true" className="pointer-events-none fixed inset-0 -z-20 opacity-90">

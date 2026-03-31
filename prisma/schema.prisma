@@ -21,13 +21,129 @@ model Doctor {
 
 model User {
   id        String   @id @default(cuid())
-  clerkId   String   @unique
-  email     String?  @unique
+  email     String  @unique
+  password  String?  
+  verifiedUser   Boolean @default(false)
   name      String?
   imageUrl  String?
+  provider  String?   // "google" or "otp"
+  providerId String?  // Google ID
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  token RefreshToken[] 
+  sessionId  Session[]
+  bookAppointment Booking[]
+  reports   MedicalRecord[]
+  notifications Notification[]
+  
 
   @@index([email])
 }
+
+
+model OtpVerify {
+  id String @id @default(cuid())
+  email String 
+  otp  String 
+  
+  // verifiedUser Boolean @default(false)
+  // userId Int
+  createdAt DateTime @default(now())
+  expireOtp DateTime
+}
+
+
+model RefreshToken {
+  id        String   @id @default(cuid())
+  token     String   @unique
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+}
+
+model Session{
+  id  String  @id @default(cuid())
+  selectedDoctorId  String
+  userId String
+  doctorName String?
+  speciality String?
+  voiceChat String?
+  report  String?
+  status sessionStatus[]
+  user  User @relation(fields: [userId],references: [id],onDelete: Cascade)
+  createdAt DateTime @default(now())
+}
+
+model Booking{
+  id  String @id @default(cuid())
+  userId String
+  consultationNotes String
+  status BookingStatus
+  date String
+  timing String
+  doctorName String
+  specialization String
+  avatar String
+  veifiedBooking Boolean @default(false)
+  createdAt DateTime     @default(now())
+  user User @relation(fields:[userId],references: [id],onDelete: Cascade)
+}
+
+enum BookingStatus{
+  pending
+  completed
+  cancelled
+}
+
+enum sessionStatus{
+  pending
+  completed
+  cancelled
+}
+
+
+model MedicalRecord {
+  id                     String   @id @default(cuid())
+  agent                  String
+  userName               String
+  userId                 String
+  timestamp              DateTime @default(now())
+  chiefComplaint         String
+  diagnosis              String
+  treatmentPlan          String
+  prognosis              String
+  summary                String
+  severity               String
+  riskFactors            String[]
+  symptoms               String[]
+  medicationsMentioned   String[]
+  recommendations        String[]
+  createdAt              DateTime @default(now())
+  updatedAt              DateTime @updatedAt 
+  user User @relation(fields:[userId],references: [id],onDelete: Cascade)
+}
+
+model Notification {
+  id     String  @id @default(cuid())
+  type  NotificationType
+  title String
+  description String?
+  time String
+  userId String
+  read Boolean @default(false)
+  createdAt  DateTime @default(now())
+  updatedAt   DateTime @updatedAt 
+  user User @relation(fields:[userId],references: [id],onDelete: Cascade)
+
+}
+
+enum NotificationType {
+  appointment
+  system
+  message
+ 
+}
+
+
 

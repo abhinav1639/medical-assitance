@@ -1,12 +1,12 @@
-"use client";
+'use client'
 
-import Link from "next/link";
-import { motion, useReducedMotion } from "../components/Motion";
-import type { Variants } from "framer-motion";
+import type { Variants } from 'framer-motion'
+import Link from 'next/link'
+import { motion, useHydrationSafeReducedMotion } from '../components/Motion'
 
 function GlowBlob({ className, delay = 0 }: { className: string; delay?: number }) {
-  const reduce = useReducedMotion();
-  const easeInOut = [0.4, 0, 0.2, 1] as const;
+  const reduce = useHydrationSafeReducedMotion()
+  const easeInOut = [0.4, 0, 0.2, 1] as const
   return (
     <motion.div
       aria-hidden="true"
@@ -33,12 +33,12 @@ function GlowBlob({ className, delay = 0 }: { className: string; delay?: number 
             }
       }
     />
-  );
+  )
 }
 
 export default function Hero() {
-  const reduce = useReducedMotion();
-  const easeOut = [0.16, 1, 0.3, 1] as const;
+  const reduce = useHydrationSafeReducedMotion()
+  const easeOut = [0.16, 1, 0.3, 1] as const
 
   const container: Variants = {
     hidden: { opacity: 0 },
@@ -46,34 +46,32 @@ export default function Hero() {
       opacity: 1,
       transition: reduce ? { duration: 0.2 } : { staggerChildren: 0.08 },
     },
-  };
+  }
 
   const item: Variants = {
-    hidden: { opacity: 0, y: 10, filter: "blur(6px)" },
+    hidden: { opacity: 0, y: 10, filter: 'blur(6px)' },
     show: {
       opacity: 1,
       y: 0,
-      filter: "blur(0px)",
-      transition: reduce
-        ? { duration: 0.2 }
-        : { duration: 0.6, ease: easeOut },
+      filter: 'blur(0px)',
+      transition: reduce ? { duration: 0.2 } : { duration: 0.6, ease: easeOut },
     },
-  };
+  }
 
   return (
     <section className="relative overflow-hidden">
-      <div className="absolute inset-0 -z-10 bg-gradient-to-b from-white via-white to-white dark:from-black dark:via-black dark:to-black" />
-      <div className="absolute inset-0 -z-10 opacity-70 [mask-image:radial-gradient(60%_50%_at_50%_12%,black,transparent)]">
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(0,0,0,0.04)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,0,0,0.04)_1px,transparent_1px)] bg-[size:52px_52px] dark:bg-[linear-gradient(to_right,rgba(255,255,255,0.06)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.06)_1px,transparent_1px)]" />
+      <div className="absolute inset-0 -z-10 bg-linear-to-b from-white via-white to-white dark:from-black dark:via-black dark:to-black" />
+      <div className="absolute inset-0 -z-10 opacity-70 mask-[radial-gradient(60%_50%_at_50%_12%,black,transparent)]">
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(0,0,0,0.04)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,0,0,0.04)_1px,transparent_1px)] bg-size-[52px_52px] dark:bg-[linear-gradient(to_right,rgba(255,255,255,0.06)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.06)_1px,transparent_1px)]" />
       </div>
 
       <GlowBlob
         delay={0}
-        className="pointer-events-none absolute -top-24 left-1/2 -z-10 h-[28rem] w-[28rem] -translate-x-[70%] rounded-full bg-gradient-to-tr from-emerald-300/50 via-sky-300/40 to-indigo-300/40 blur-3xl dark:from-emerald-500/20 dark:via-sky-500/20 dark:to-indigo-500/20"
+        className="pointer-events-none absolute -top-24 left-1/2 -z-10 h-112 w-md -translate-x-[70%] rounded-full bg-linear-to-tr from-emerald-300/50 via-sky-300/40 to-indigo-300/40 blur-3xl dark:from-emerald-500/20 dark:via-sky-500/20 dark:to-indigo-500/20"
       />
       <GlowBlob
         delay={1.2}
-        className="pointer-events-none absolute -top-32 left-1/2 -z-10 h-[30rem] w-[30rem] -translate-x-[-5%] rounded-full bg-gradient-to-tr from-fuchsia-300/40 via-rose-300/30 to-amber-300/30 blur-3xl dark:from-fuchsia-500/15 dark:via-rose-500/15 dark:to-amber-500/15"
+        className="pointer-events-none absolute -top-32 left-1/2 -z-10 h-120 w-120 -translate-x-[-5%] rounded-full bg-linear-to-tr from-fuchsia-300/40 via-rose-300/30 to-amber-300/30 blur-3xl dark:from-fuchsia-500/15 dark:via-rose-500/15 dark:to-amber-500/15"
       />
 
       <div className="mx-auto max-w-6xl px-6 pb-20 pt-20 sm:pb-28 sm:pt-28">
@@ -96,7 +94,7 @@ export default function Hero() {
               variants={item}
               className="text-balance text-4xl font-semibold tracking-tight text-zinc-950 dark:text-white sm:text-5xl"
             >
-              Meet <span className="text-emerald-600 dark:text-emerald-400">Dotor AI</span>, your
+              Meet <span className="text-emerald-600 dark:text-emerald-400">MedCare</span>, your
               voice medical assistant—backed by 20+ specialists.
             </motion.h1>
 
@@ -143,7 +141,7 @@ export default function Hero() {
             <div className="relative overflow-hidden rounded-3xl border border-black/10 bg-white/60 p-6 shadow-[0_20px_60px_-30px_rgba(0,0,0,0.35)] backdrop-blur dark:border-white/10 dark:bg-black/30">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <div className="h-10 w-10 rounded-2xl bg-gradient-to-br from-emerald-500 to-sky-500" />
+                  <div className="h-10 w-10 rounded-2xl bg-linear-to-br from-emerald-500 to-sky-500" />
                   <div>
                     <div className="text-sm font-semibold text-zinc-950 dark:text-white">
                       Voice Consultation
@@ -161,14 +159,14 @@ export default function Hero() {
 
               <div className="mt-6 space-y-3">
                 {[
-                  { who: "You", text: "I have a sore throat and fever since yesterday." },
+                  { who: 'You', text: 'I have a sore throat and fever since yesterday.' },
                   {
-                    who: "Dotor AI",
-                    text: "Got it. Any cough, trouble breathing, or difficulty swallowing? What’s your temperature?",
+                    who: 'Dotor AI',
+                    text: 'Got it. Any cough, trouble breathing, or difficulty swallowing? What’s your temperature?',
                   },
                   {
-                    who: "Dotor AI",
-                    text: "Based on your answers, I’ll suggest next steps and when to seek urgent care.",
+                    who: 'Dotor AI',
+                    text: 'Based on your answers, I’ll suggest next steps and when to seek urgent care.',
                   },
                 ].map((m, idx) => (
                   <motion.div
@@ -178,9 +176,9 @@ export default function Hero() {
                     viewport={{ once: false }}
                     transition={{ delay: reduce ? 0 : 0.12 * idx, duration: 0.5 }}
                     className={`rounded-2xl border px-4 py-3 text-sm leading-6 backdrop-blur ${
-                      m.who === "You"
-                        ? "ml-auto max-w-[90%] border-black/10 bg-white/70 text-zinc-800 dark:border-white/10 dark:bg-white/10 dark:text-zinc-100"
-                        : "mr-auto max-w-[92%] border-black/10 bg-gradient-to-br from-emerald-50/60 to-sky-50/60 text-zinc-900 dark:border-white/10 dark:from-emerald-500/10 dark:to-sky-500/10 dark:text-zinc-100"
+                      m.who === 'You'
+                        ? 'ml-auto max-w-[90%] border-black/10 bg-white/70 text-zinc-800 dark:border-white/10 dark:bg-white/10 dark:text-zinc-100'
+                        : 'mr-auto max-w-[92%] border-black/10 bg-linear-to-br from-emerald-50/60 to-sky-50/60 text-zinc-900 dark:border-white/10 dark:from-emerald-500/10 dark:to-sky-500/10 dark:text-zinc-100'
                     }`}
                   >
                     <div className="mb-1 text-xs font-medium opacity-70">{m.who}</div>
@@ -196,11 +194,11 @@ export default function Hero() {
                 </div>
                 <div className="mt-2 h-2 overflow-hidden rounded-full bg-black/5 dark:bg-white/10">
                   <motion.div
-                    className="h-full w-[78%] rounded-full bg-gradient-to-r from-emerald-500 to-sky-500"
+                    className="h-full w-[78%] rounded-full bg-linear-to-r from-emerald-500 to-sky-500"
                     initial={{ width: 0 }}
-                    whileInView={{ width: "78%" }}
+                    whileInView={{ width: '78%' }}
                     viewport={{ once: false }}
-                    transition={{ duration: reduce ? 0.2 : 1.0, ease: "easeOut" }}
+                    transition={{ duration: reduce ? 0.2 : 1.0, ease: 'easeOut' }}
                   />
                 </div>
               </div>
@@ -212,6 +210,5 @@ export default function Hero() {
         </motion.div>
       </div>
     </section>
-  );
+  )
 }
-

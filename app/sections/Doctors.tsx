@@ -1,19 +1,19 @@
-"use client";
+'use client'
 
-import { doctors } from "../data/doctors";
-import { motion, useReducedMotion } from "../components/Motion";
+import { motion, useHydrationSafeReducedMotion } from '../components/Motion'
+import { doctors } from '../data/doctors'
 
 function initials(name: string) {
   return name
-    .split(" ")
+    .split(' ')
     .filter(Boolean)
     .slice(0, 2)
     .map((p) => p[0]?.toUpperCase())
-    .join("");
+    .join('')
 }
 
 export default function Doctors() {
-  const reduce = useReducedMotion();
+  const reduce = useHydrationSafeReducedMotion()
 
   return (
     <section id="doctors" className="mx-auto max-w-6xl px-6 py-16 sm:py-20">
@@ -28,8 +28,8 @@ export default function Doctors() {
           </p>
         </div>
         <div className="hidden text-sm text-zinc-600 dark:text-zinc-300 sm:block">
-          Showing{" "}
-          <span className="font-semibold text-zinc-950 dark:text-white">{doctors.length}</span>{" "}
+          Showing{' '}
+          <span className="font-semibold text-zinc-950 dark:text-white">{doctors.length}</span>{' '}
           doctors
         </div>
       </div>
@@ -47,7 +47,7 @@ export default function Doctors() {
             className="rounded-3xl border border-black/10 bg-white/60 p-6 shadow-sm backdrop-blur dark:border-white/10 dark:bg-black/30"
           >
             <div className="flex items-center gap-4">
-              <div className="grid h-12 w-12 place-items-center rounded-2xl bg-gradient-to-br from-emerald-500/90 to-sky-500/90 text-sm font-semibold text-white">
+              <div className="grid h-12 w-12 place-items-center rounded-2xl bg-linear-to-br from-emerald-500/90 to-sky-500/90 text-sm font-semibold text-white">
                 {initials(d.name)}
               </div>
               <div className="min-w-0">
@@ -75,13 +75,12 @@ export default function Doctors() {
             </div>
 
             <div className="mt-4 text-sm text-zinc-600 dark:text-zinc-300">
-              <span className="font-medium text-zinc-900 dark:text-white">Languages:</span>{" "}
-              {d.languages.join(", ")}
+              <span className="font-medium text-zinc-900 dark:text-white">Languages:</span>{' '}
+              {d.languages.join(', ')}
             </div>
           </motion.div>
         ))}
       </div>
     </section>
-  );
+  )
 }
-
