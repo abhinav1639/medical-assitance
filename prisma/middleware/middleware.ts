@@ -14,11 +14,12 @@
 
 // }
 
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
 
-export function middleware(req) {
+export function middleware(req:NextRequest) {
   const authHeader = req.headers.get("authorization");
+
 
   if (!authHeader) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
@@ -27,6 +28,9 @@ export function middleware(req) {
   const token = authHeader.split(" ")[1];
 
   try {
+        if (!process.env.ACCESS_TOKEN_SECRET) {
+      throw new Error("ACCESS_TOKEN_SECRET is not defined");
+    }
     jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
     return NextResponse.next();
   } catch {
