@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Loader2, CheckCircle2 } from 'lucide-react'
 
-import { toast } from 'sonner'
+import { toast } from "react-hot-toast"
 import { AuthLayout } from '../auth/AuthLayout'
 import { GoogleButton } from '../auth/GoogleButton'
 import { AuthInput } from '../auth/AuthInput'
@@ -41,7 +41,7 @@ const SignUp = () => {
       setStep('otp')
       toast.success(result.data.message)
     } catch (error: any) {
-      toast.error(error.data.message);
+      toast.error(error.response.data.message);
       console.log(error)
       setLoading(false)
     }
@@ -62,7 +62,7 @@ const SignUp = () => {
   }
 
   const handleGoogle = () => {
-    toast.info('Google sign-up clicked (UI only)')
+    toast.success('Google sign-up clicked (UI only)')
   }
 
   const titles: Record<Step, string> = {
