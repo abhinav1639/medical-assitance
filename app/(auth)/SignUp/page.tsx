@@ -41,7 +41,7 @@ const SignUp = () => {
       setStep('otp')
       toast.success(result.data.message)
     } catch (error: any) {
-      // toast.error(error.data.message);
+      toast.error(error.data.message);
       console.log(error)
       setLoading(false)
     }

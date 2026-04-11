@@ -37,8 +37,6 @@ export  async function POST(req:NextRequest,res:NextResponse){
             where:{email}
         })
      
-     
-
         return NextResponse.json({message:"User created successfully"},{status:200})
 
 
